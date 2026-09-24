@@ -1,0 +1,18 @@
+[
+  {
+    "id": "2adf8bd8-b7d9-4b70-be18-54fb75b22669",
+    "username": "roman",
+    "email": "dadsadsa@gmail.com",
+    "hashed_password": "cda21f78d1c0a0a3d97cd3453d31d20b56d6254813c16a64347d7d784eb63871",
+    "salt": "4ee5db01f3688f1b4a816e1fe932388b",
+    "created_at": "2026-09-24T15:42:22.913906Z"
+  },
+  {
+    "id": "ca2c6c81-4e19-4513-ae65-3d7ff5fab2a9",
+    "username": "bleb1k",
+    "email": "bleb1k@gmail.com",
+    "hashed_password": "708d0aee7ac66bde9acf9e238cabbe18727c391abb1d803f979111d0671b0251",
+    "salt": "3a9dbe5431e804ccc7b452528d7dbd51",
+    "created_at": "2026-09-24T16:08:51.597882Z"
+  }
+]

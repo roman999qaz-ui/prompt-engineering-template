@@ -6,16 +6,16 @@ This repository is a full-stack boilerplate: **FastAPI** backend and **React (Ty
 
 - `backend/` — API with layered architecture (`types`, `models`, `repositories`, `services`, `routers`, `utils`). Data is stored in JSON files under `backend/data/` (one file per entity, contents are a JSON array). Uses **uv**, **Pydantic**, and FastAPI dependency injection (routers depend on services; services use repositories).
 - `frontend/` — **React + TypeScript**, **shadcn/ui**, **Redux Toolkit** (RTK Query for API, slices for UI state). No authentication.
-- `docs/` — Feature documentation split by `backend/` and `frontend/` (business requirements, architecture, test cases).
+- `docs/` — Feature documentation organized by feature (`docs/<feature>/` containing business requirements, architecture, test cases for the entire app).
 
 ## Current scope
 
-Single domain entity: **Item**, with full CRUD exposed at `/api/items` and managed in the UI.
+Domain feature: **GameLibrary** (`games`), with catalog browsing, personal library tracking (status and rating), user authentication, and statistics.
 
 ## Working conventions
 
 - Add new features under the same layer folders on the backend and under `src/features/` on the frontend.
-- Document each feature under `docs/backend/<feature>/` and `docs/frontend/<feature>/`.
+- Document each feature under `docs/<feature>/` (e.g. `docs/games/`).
 - Keep AI assistant entry points minimal: this file is the source of truth; `Claude.md` points here.
 
 ## Local development

@@ -1,37 +1,59 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import type { LibraryEntry, PlayStatus } from '@/types'
 
-export type ItemDialogMode = 'create' | 'edit' | null
+export type AppView = 'catalog' | 'details' | 'library' | 'profile'
+export type LibraryFilter = 'all' | PlayStatus
 
 interface AppState {
-  itemDialogMode: ItemDialogMode
-  editingItemId: string | null
+  currentView: AppView
+  selectedGameId: string | null
+  libraryFilter: LibraryFilter
+  isStatusDialogOpen: boolean
+  statusDialogEntry: LibraryEntry | null
 }
 
 const initialState: AppState = {
-  itemDialogMode: null,
-  editingItemId: null,
+  currentView: 'catalog',
+  selectedGameId: null,
+  libraryFilter: 'all',
+  isStatusDialogOpen: false,
+  statusDialogEntry: null,
 }
 
-const appSlice = createSlice({
+export const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    openCreateItemDialog(state) {
-      state.itemDialogMode = 'create'
-      state.editingItemId = null
+    setCurrentView(state, action: PayloadAction<AppView>) {
+      state.currentView = action.payload
+      if (action.payload !== 'details') {
+        state.selectedGameId = null
+      }
     },
-    openEditItemDialog(state, action: PayloadAction<string>) {
-      state.itemDialogMode = 'edit'
-      state.editingItemId = action.payload
+    openGameDetails(state, action: PayloadAction<string>) {
+      state.selectedGameId = action.payload
+      state.currentView = 'details'
     },
-    closeItemDialog(state) {
-      state.itemDialogMode = null
-      state.editingItemId = null
+    setLibraryFilter(state, action: PayloadAction<LibraryFilter>) {
+      state.libraryFilter = action.payload
+    },
+    openStatusDialog(state, action: PayloadAction<LibraryEntry>) {
+      state.isStatusDialogOpen = true
+      state.statusDialogEntry = action.payload
+    },
+    closeStatusDialog(state) {
+      state.isStatusDialogOpen = false
+      state.statusDialogEntry = null
     },
   },
 })
 
-export const { openCreateItemDialog, openEditItemDialog, closeItemDialog } =
-  appSlice.actions
+export const {
+  setCurrentView,
+  openGameDetails,
+  setLibraryFilter,
+  openStatusDialog,
+  closeStatusDialog,
+} = appSlice.actions
 
 export default appSlice.reducer
