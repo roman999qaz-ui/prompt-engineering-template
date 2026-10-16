@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Optional
 
 from app.models.library import LibraryEntryInDb
 from app.types.library import PlayStatus
@@ -7,11 +6,11 @@ from app.utils.json_store import read_list_file, write_list_file
 
 
 class LibraryRepository:
-    def __init__(self, storage_path: Path):
+    def __init__(self, storage_path: Path) -> None:
         self._path = storage_path
 
     def list_by_user(
-        self, user_id: str, status: Optional[PlayStatus] = None
+        self, user_id: str, status: PlayStatus | None = None
     ) -> list[LibraryEntryInDb]:
         entries = read_list_file(self._path, LibraryEntryInDb)
         user_entries = [e for e in entries if e.user_id == user_id]
@@ -19,16 +18,14 @@ class LibraryRepository:
             user_entries = [e for e in user_entries if e.status == status]
         return user_entries
 
-    def get_by_id(self, entry_id: str) -> Optional[LibraryEntryInDb]:
+    def get_by_id(self, entry_id: str) -> LibraryEntryInDb | None:
         entries = read_list_file(self._path, LibraryEntryInDb)
         for e in entries:
             if e.id == entry_id:
                 return e
         return None
 
-    def get_by_user_and_game(
-        self, user_id: str, game_id: str
-    ) -> Optional[LibraryEntryInDb]:
+    def get_by_user_and_game(self, user_id: str, game_id: str) -> LibraryEntryInDb | None:
         entries = read_list_file(self._path, LibraryEntryInDb)
         for e in entries:
             if e.user_id == user_id and e.game_id == game_id:

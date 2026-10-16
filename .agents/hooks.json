@@ -1,0 +1,57 @@
+{
+  "safety-guard": {
+    "PreToolUse": [
+      {
+        "matcher": "run_command|write_to_file|replace_file_content",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run python scripts/hook_handler.py pre",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  },
+  "post-tool-auditor": {
+    "PostToolUse": [
+      {
+        "matcher": "write_to_file|replace_file_content|run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run python scripts/hook_handler.py post",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  },
+  "context-injector": {
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "uv run python scripts/hook_handler.py pre_invocation",
+        "timeout": 10
+      }
+    ]
+  },
+  "post-invocation-auditor": {
+    "PostInvocation": [
+      {
+        "type": "command",
+        "command": "uv run python scripts/hook_handler.py post_invocation",
+        "timeout": 10
+      }
+    ]
+  },
+  "quality-gate": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "uv run python scripts/hook_handler.py stop",
+        "timeout": 30
+      }
+    ]
+  }
+}

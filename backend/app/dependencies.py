@@ -1,5 +1,4 @@
 from functools import lru_cache
-from typing import Optional
 
 from fastapi import Depends, Header, HTTPException, status
 
@@ -48,7 +47,7 @@ def get_library_service(
 
 
 def get_current_user(
-    authorization: Optional[str] = Header(None),
+    authorization: str | None = Header(None),
     auth_service: AuthService = Depends(get_auth_service),
 ) -> UserResponse:
     if not authorization:

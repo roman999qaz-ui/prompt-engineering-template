@@ -1,5 +1,5 @@
-from datetime import datetime, timezone
-from typing import Optional
+from datetime import UTC, datetime
+
 from pydantic import BaseModel, ConfigDict, Field
 
 from app.models.game import GameResponse
@@ -11,8 +11,8 @@ class AddLibraryEntryRequest(BaseModel):
 
 
 class UpdateLibraryEntryRequest(BaseModel):
-    status: Optional[PlayStatus] = None
-    rating: Optional[int] = Field(None, ge=1, le=10)
+    status: PlayStatus | None = None
+    rating: int | None = Field(None, ge=1, le=10)
 
 
 class LibraryEntryInDb(BaseModel):
@@ -20,9 +20,9 @@ class LibraryEntryInDb(BaseModel):
     user_id: str
     game_id: str
     status: PlayStatus = PlayStatus.WANT_TO_PLAY
-    rating: Optional[int] = None
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    rating: int | None = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class LibraryEntryResponse(BaseModel):
@@ -32,10 +32,10 @@ class LibraryEntryResponse(BaseModel):
     user_id: str
     game_id: str
     status: PlayStatus
-    rating: Optional[int] = None
+    rating: int | None = None
     created_at: datetime
     updated_at: datetime
-    game: Optional[GameResponse] = None
+    game: GameResponse | None = None
 
 
 class UserStatsResponse(BaseModel):
@@ -43,4 +43,4 @@ class UserStatsResponse(BaseModel):
     want_to_play_count: int
     playing_count: int
     completed_count: int
-    average_rating: Optional[float] = None
+    average_rating: float | None = None

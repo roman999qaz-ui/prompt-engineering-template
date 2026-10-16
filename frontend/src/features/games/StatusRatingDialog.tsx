@@ -1,51 +1,49 @@
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Star, Trash2 } from 'lucide-react'
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Star, Trash2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
-import { useLibrary } from '@/hooks/useLibrary'
-import { closeStatusDialog } from '@/store/slices/appSlice'
-import type { AppDispatch, RootState } from '@/store/store'
-import type { LibraryEntry, PlayStatus } from '@/types'
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { useLibrary } from "@/hooks/useLibrary";
+import { closeStatusDialog } from "@/store/slices/appSlice";
+import type { AppDispatch, RootState } from "@/store/store";
+import type { LibraryEntry, PlayStatus } from "@/types";
 
 interface DialogFormProps {
-  entry: LibraryEntry
-  onClose: () => void
+  entry: LibraryEntry;
+  onClose: () => void;
 }
 
 function StatusRatingDialogForm({ entry, onClose }: DialogFormProps) {
-  const { updateEntry, removeEntry, isMutating } = useLibrary()
-  const [status, setStatus] = useState<PlayStatus>(entry.status)
-  const [rating, setRating] = useState<number | null>(entry.rating)
+  const { updateEntry, removeEntry, isMutating } = useLibrary();
+  const [status, setStatus] = useState<PlayStatus>(entry.status);
+  const [rating, setRating] = useState<number | null>(entry.rating);
 
   const handleSave = async () => {
     await updateEntry(entry.id, {
       status,
       rating,
-    })
-    onClose()
-  }
+    });
+    onClose();
+  };
 
   const handleRemove = async () => {
-    if (window.confirm('Remove this game from your personal library?')) {
-      await removeEntry(entry.id)
-      onClose()
+    if (window.confirm("Remove this game from your personal library?")) {
+      await removeEntry(entry.id);
+      onClose();
     }
-  }
+  };
 
   return (
     <DialogContent className="sm:max-w-md">
       <DialogHeader>
-        <DialogTitle className="text-xl">
-          Update {entry.game?.title ?? 'Game'}
-        </DialogTitle>
+        <DialogTitle className="text-xl">Update {entry.game?.title ?? "Game"}</DialogTitle>
         <DialogDescription>
           Modify your play status and personal rating for this game.
         </DialogDescription>
@@ -58,9 +56,9 @@ function StatusRatingDialogForm({ entry, onClose }: DialogFormProps) {
           <div className="grid grid-cols-3 gap-2">
             {(
               [
-                { id: 'want_to_play', label: 'Want to Play' },
-                { id: 'playing', label: 'Playing' },
-                { id: 'completed', label: 'Completed' },
+                { id: "want_to_play", label: "Want to Play" },
+                { id: "playing", label: "Playing" },
+                { id: "completed", label: "Completed" },
               ] as const
             ).map((item) => (
               <button
@@ -69,8 +67,8 @@ function StatusRatingDialogForm({ entry, onClose }: DialogFormProps) {
                 onClick={() => setStatus(item.id)}
                 className={`rounded-lg border p-2.5 text-center text-xs font-medium transition-all ${
                   status === item.id
-                    ? 'border-primary bg-primary/10 text-primary font-semibold ring-1 ring-primary'
-                    : 'border-border bg-card text-muted-foreground hover:bg-muted'
+                    ? "border-primary bg-primary/10 text-primary font-semibold ring-1 ring-primary"
+                    : "border-border bg-card text-muted-foreground hover:bg-muted"
                 }`}
               >
                 {item.label}
@@ -101,8 +99,8 @@ function StatusRatingDialogForm({ entry, onClose }: DialogFormProps) {
                 onClick={() => setRating(rating === score ? null : score)}
                 className={`flex h-8 w-8 items-center justify-center rounded-md border text-xs font-semibold transition-colors ${
                   rating === score
-                    ? 'border-amber-500 bg-amber-500 text-white shadow-xs'
-                    : 'border-border bg-card text-foreground hover:bg-muted'
+                    ? "border-amber-500 bg-amber-500 text-white shadow-xs"
+                    : "border-border bg-card text-foreground hover:bg-muted"
                 }`}
               >
                 {score}
@@ -132,46 +130,36 @@ function StatusRatingDialogForm({ entry, onClose }: DialogFormProps) {
           </Button>
 
           <div className="flex gap-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onClose}
-              disabled={isMutating}
-            >
+            <Button type="button" variant="outline" onClick={onClose} disabled={isMutating}>
               Cancel
             </Button>
             <Button onClick={handleSave} disabled={isMutating}>
-              {isMutating ? 'Saving...' : 'Save Changes'}
+              {isMutating ? "Saving..." : "Save Changes"}
             </Button>
           </div>
         </div>
       </div>
     </DialogContent>
-  )
+  );
 }
 
 export function StatusRatingDialog() {
-  const dispatch = useDispatch<AppDispatch>()
-  const { isStatusDialogOpen, statusDialogEntry } = useSelector(
-    (state: RootState) => state.app
-  )
+  const dispatch = useDispatch<AppDispatch>();
+  const { isStatusDialogOpen, statusDialogEntry } = useSelector((state: RootState) => state.app);
 
   const handleClose = () => {
-    dispatch(closeStatusDialog())
-  }
+    dispatch(closeStatusDialog());
+  };
 
-  if (!statusDialogEntry) return null
+  if (!statusDialogEntry) return null;
 
   return (
-    <Dialog
-      open={isStatusDialogOpen}
-      onOpenChange={(open) => !open && handleClose()}
-    >
+    <Dialog open={isStatusDialogOpen} onOpenChange={(open) => !open && handleClose()}>
       <StatusRatingDialogForm
         key={statusDialogEntry.id}
         entry={statusDialogEntry}
         onClose={handleClose}
       />
     </Dialog>
-  )
+  );
 }

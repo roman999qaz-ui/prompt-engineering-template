@@ -54,6 +54,7 @@ start http://localhost:5174
 echo.
 echo [INFO] You can minimize or close this launcher window.
 echo        Servers will continue running in their respective command windows.
-echo        To stop servers, close their terminal windows or press Ctrl+C.
+echo        To stop servers, run stop.bat or close their terminal windows.
+echo        To run smoke tests, run test.bat.
 echo.
 pause

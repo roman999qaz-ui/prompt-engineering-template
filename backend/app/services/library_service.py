@@ -1,6 +1,5 @@
-from datetime import datetime, timezone
-from typing import Optional
 import uuid
+from datetime import UTC, datetime
 
 from fastapi import HTTPException, status
 
@@ -16,14 +15,12 @@ from app.types.library import PlayStatus
 
 
 class LibraryService:
-    def __init__(
-        self, library_repo: LibraryRepository, game_repo: GameRepository
-    ):
+    def __init__(self, library_repo: LibraryRepository, game_repo: GameRepository) -> None:
         self._library_repo = library_repo
         self._game_repo = game_repo
 
     def list_user_library(
-        self, user_id: str, status_filter: Optional[PlayStatus] = None
+        self, user_id: str, status_filter: PlayStatus | None = None
     ) -> list[LibraryEntryResponse]:
         entries = self._library_repo.list_by_user(user_id, status=status_filter)
         response: list[LibraryEntryResponse] = []
@@ -61,7 +58,7 @@ class LibraryService:
                 detail="Game is already in your library",
             )
 
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         entry = LibraryEntryInDb(
             id=str(uuid.uuid4()),
             user_id=user_id,
@@ -88,8 +85,8 @@ class LibraryService:
         self,
         entry_id: str,
         user_id: str,
-        new_status: Optional[PlayStatus] = None,
-        new_rating: Optional[int] = None,
+        new_status: PlayStatus | None = None,
+        new_rating: int | None = None,
     ) -> LibraryEntryResponse:
         entry = self._library_repo.get_by_id(entry_id)
         if not entry or entry.user_id != user_id:
@@ -109,7 +106,7 @@ class LibraryService:
                 )
             entry.rating = new_rating
 
-        entry.updated_at = datetime.now(timezone.utc)
+        entry.updated_at = datetime.now(UTC)
         self._library_repo.update(entry)
 
         game = self._game_repo.get_by_id(entry.game_id)
@@ -142,9 +139,7 @@ class LibraryService:
         completed = sum(1 for e in entries if e.status == PlayStatus.COMPLETED)
 
         rated_entries = [e.rating for e in entries if e.rating is not None]
-        avg_rating = (
-            round(sum(rated_entries) / len(rated_entries), 1) if rated_entries else None
-        )
+        avg_rating = round(sum(rated_entries) / len(rated_entries), 1) if rated_entries else None
 
         return UserStatsResponse(
             total_games=total,

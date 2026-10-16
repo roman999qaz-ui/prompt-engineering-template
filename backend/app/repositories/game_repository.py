@@ -1,19 +1,18 @@
 from pathlib import Path
-from typing import Optional
 
 from app.models.game import GameInDb
 from app.utils.json_store import read_list_file, write_list_file
 
 
 class GameRepository:
-    def __init__(self, storage_path: Path):
+    def __init__(self, storage_path: Path) -> None:
         self._path = storage_path
 
     def list_all(
         self,
-        search: Optional[str] = None,
-        genre: Optional[str] = None,
-        platform: Optional[str] = None,
+        search: str | None = None,
+        genre: str | None = None,
+        platform: str | None = None,
     ) -> list[GameInDb]:
         games = read_list_file(self._path, GameInDb)
 
@@ -23,21 +22,17 @@ class GameRepository:
 
         if genre:
             target_genre = genre.strip().lower()
-            games = [
-                g for g in games if any(target_genre == gen.lower() for gen in g.genres)
-            ]
+            games = [g for g in games if any(target_genre == gen.lower() for gen in g.genres)]
 
         if platform:
             target_platform = platform.strip().lower()
             games = [
-                g
-                for g in games
-                if any(target_platform == plat.lower() for plat in g.platforms)
+                g for g in games if any(target_platform == plat.lower() for plat in g.platforms)
             ]
 
         return games
 
-    def get_by_id(self, game_id: str) -> Optional[GameInDb]:
+    def get_by_id(self, game_id: str) -> GameInDb | None:
         games = read_list_file(self._path, GameInDb)
         for g in games:
             if g.id == game_id:

@@ -1,28 +1,28 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { Gamepad2, Heart } from 'lucide-react'
-import { Navbar } from '@/components/Navbar'
-import { AuthModal } from '@/features/auth/AuthModal'
-import { CatalogPage } from '@/features/games/CatalogPage'
-import { GameDetailsPage } from '@/features/games/GameDetailsPage'
-import { MyLibraryPage } from '@/features/games/MyLibraryPage'
-import { ProfilePage } from '@/features/games/ProfilePage'
-import { StatusRatingDialog } from '@/features/games/StatusRatingDialog'
-import { setCurrentView } from '@/store/slices/appSlice'
-import type { AppDispatch, RootState } from '@/store/store'
+import { useDispatch, useSelector } from "react-redux";
+import { Gamepad2, Heart } from "lucide-react";
+import { Navbar } from "@/components/Navbar";
+import { AuthModal } from "@/features/auth/AuthModal";
+import { CatalogPage } from "@/features/games/CatalogPage";
+import { GameDetailsPage } from "@/features/games/GameDetailsPage";
+import { MyLibraryPage } from "@/features/games/MyLibraryPage";
+import { ProfilePage } from "@/features/games/ProfilePage";
+import { StatusRatingDialog } from "@/features/games/StatusRatingDialog";
+import { setCurrentView } from "@/store/slices/appSlice";
+import type { AppDispatch, RootState } from "@/store/store";
 
 function App() {
-  const dispatch = useDispatch<AppDispatch>()
-  const currentView = useSelector((state: RootState) => state.app.currentView)
+  const dispatch = useDispatch<AppDispatch>();
+  const currentView = useSelector((state: RootState) => state.app.currentView);
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col transition-colors duration-200">
       <Navbar />
 
       <main className="flex-1">
-        {currentView === 'catalog' && <CatalogPage />}
-        {currentView === 'details' && <GameDetailsPage />}
-        {currentView === 'library' && <MyLibraryPage />}
-        {currentView === 'profile' && <ProfilePage />}
+        {currentView === "catalog" && <CatalogPage />}
+        {currentView === "details" && <GameDetailsPage />}
+        {currentView === "library" && <MyLibraryPage />}
+        {currentView === "profile" && <ProfilePage />}
       </main>
 
       {/* Modern Footer */}
@@ -41,21 +41,21 @@ function App() {
           <div className="flex items-center gap-4 text-xs">
             <button
               type="button"
-              onClick={() => dispatch(setCurrentView('catalog'))}
+              onClick={() => dispatch(setCurrentView("catalog"))}
               className="hover:text-foreground transition-colors cursor-pointer"
             >
               Catalog
             </button>
             <button
               type="button"
-              onClick={() => dispatch(setCurrentView('library'))}
+              onClick={() => dispatch(setCurrentView("library"))}
               className="hover:text-foreground transition-colors cursor-pointer"
             >
               My Library
             </button>
             <button
               type="button"
-              onClick={() => dispatch(setCurrentView('profile'))}
+              onClick={() => dispatch(setCurrentView("profile"))}
               className="hover:text-foreground transition-colors cursor-pointer"
             >
               Stats
@@ -74,7 +74,7 @@ function App() {
       <AuthModal />
       <StatusRatingDialog />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

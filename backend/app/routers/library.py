@@ -1,5 +1,3 @@
-from typing import Optional
-
 from fastapi import APIRouter, Depends, Response, status
 
 from app.dependencies import get_current_user, get_library_service
@@ -17,13 +15,11 @@ router = APIRouter(prefix="/library", tags=["library"])
 
 @router.get("", response_model=list[LibraryEntryResponse])
 def get_user_library(
-    status: Optional[PlayStatus] = None,
+    status: PlayStatus | None = None,
     current_user: UserResponse = Depends(get_current_user),
     library_service: LibraryService = Depends(get_library_service),
 ) -> list[LibraryEntryResponse]:
-    return library_service.list_user_library(
-        user_id=current_user.id, status_filter=status
-    )
+    return library_service.list_user_library(user_id=current_user.id, status_filter=status)
 
 
 @router.post(
@@ -36,9 +32,7 @@ def add_to_library(
     current_user: UserResponse = Depends(get_current_user),
     library_service: LibraryService = Depends(get_library_service),
 ) -> LibraryEntryResponse:
-    return library_service.add_to_library(
-        user_id=current_user.id, game_id=req.game_id
-    )
+    return library_service.add_to_library(user_id=current_user.id, game_id=req.game_id)
 
 
 @router.patch("/{entry_id}", response_model=LibraryEntryResponse)

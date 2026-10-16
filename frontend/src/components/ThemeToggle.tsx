@@ -1,14 +1,14 @@
-import { Moon, Sun } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { useTheme } from '@/hooks/useTheme'
+import { Moon, Sun } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useTheme } from "@/hooks/useTheme";
 
 interface ThemeToggleProps {
-  className?: string
-  showLabel?: boolean
+  className?: string;
+  showLabel?: boolean;
 }
 
-export function ThemeToggle({ className = '', showLabel = false }: ThemeToggleProps) {
-  const { isDark, toggleTheme } = useTheme()
+export function ThemeToggle({ className = "", showLabel = false }: ThemeToggleProps) {
+  const { isDark, toggleTheme } = useTheme();
 
   return (
     <Button
@@ -16,7 +16,7 @@ export function ThemeToggle({ className = '', showLabel = false }: ThemeTogglePr
       size="sm"
       onClick={toggleTheme}
       className={`relative h-9 px-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer ${className}`}
-      title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+      title={isDark ? "Switch to light theme" : "Switch to dark theme"}
       aria-label="Toggle theme"
     >
       <div className="relative flex items-center justify-center h-4 w-4">
@@ -27,10 +27,8 @@ export function ThemeToggle({ className = '', showLabel = false }: ThemeTogglePr
         )}
       </div>
       {showLabel && (
-        <span className="ml-2 text-xs font-medium">
-          {isDark ? 'Light Mode' : 'Dark Mode'}
-        </span>
+        <span className="ml-2 text-xs font-medium">{isDark ? "Light Mode" : "Dark Mode"}</span>
       )}
     </Button>
-  )
+  );
 }

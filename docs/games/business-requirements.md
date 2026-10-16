@@ -45,7 +45,7 @@ GameLibrary addresses this problem by providing a personal library where users c
 
 - User registration and account creation.
 - User authentication (login/logout).
-- Browsing the global game catalog.
+- Browsing the global game catalog (2,279+ verified games with high-resolution artwork).
 - Game search by title.
 - Filtering catalog by genre and platform (single or combined filters).
 - Viewing detailed game information.
@@ -55,6 +55,8 @@ GameLibrary addresses this problem by providing a personal library where users c
 - Rating games with a personal score (1–10).
 - Viewing and filtering personal library by status.
 - User profile with automatic library statistics calculation.
+- Dark and Light theme toggle with persisted user preference.
+- Automated API smoke test suite covering auth, catalog, library, and tenant isolation.
 
 ### 4.2 Out of Scope
 

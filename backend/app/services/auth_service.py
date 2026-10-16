@@ -1,7 +1,6 @@
 import hashlib
 import secrets
 import uuid
-from typing import Optional
 
 from fastapi import HTTPException, status
 
@@ -19,7 +18,7 @@ class AuthService:
     # In-memory session store mapping token -> user_id
     _active_tokens: dict[str, str] = {}
 
-    def __init__(self, user_repo: UserRepository):
+    def __init__(self, user_repo: UserRepository) -> None:
         self._user_repo = user_repo
 
     @staticmethod
@@ -95,7 +94,7 @@ class AuthService:
             ),
         )
 
-    def get_user_by_token(self, token: str) -> Optional[UserResponse]:
+    def get_user_by_token(self, token: str) -> UserResponse | None:
         user_id = AuthService._active_tokens.get(token)
         if not user_id:
             return None

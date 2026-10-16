@@ -1,22 +1,21 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { Gamepad2, Library, LogIn, LogOut, User as UserIcon } from 'lucide-react'
-import { ThemeToggle } from '@/components/ThemeToggle'
-import { Button } from '@/components/ui/button'
-import { useAuth } from '@/hooks/useAuth'
-import { useLibrary } from '@/hooks/useLibrary'
-import { setCurrentView, type AppView } from '@/store/slices/appSlice'
-import type { AppDispatch, RootState } from '@/store/store'
+import { useDispatch, useSelector } from "react-redux";
+import { Gamepad2, Library, LogIn, LogOut, User as UserIcon } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { useLibrary } from "@/hooks/useLibrary";
+import { setCurrentView, type AppView } from "@/store/slices/appSlice";
+import type { AppDispatch, RootState } from "@/store/store";
 
 export function Navbar() {
-  const dispatch = useDispatch<AppDispatch>()
-  const currentView = useSelector((state: RootState) => state.app.currentView)
-  const { user, isAuthenticated, logout, openLoginModal, openRegisterModal } =
-    useAuth()
-  const { stats } = useLibrary()
+  const dispatch = useDispatch<AppDispatch>();
+  const currentView = useSelector((state: RootState) => state.app.currentView);
+  const { user, isAuthenticated, logout, openLoginModal, openRegisterModal } = useAuth();
+  const { stats } = useLibrary();
 
   const handleNav = (view: AppView) => {
-    dispatch(setCurrentView(view))
-  }
+    dispatch(setCurrentView(view));
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/80 bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/70 transition-colors">
@@ -24,7 +23,7 @@ export function Navbar() {
         {/* Brand */}
         <div
           className="flex cursor-pointer items-center gap-3 font-bold text-xl tracking-tight transition-transform hover:scale-[1.02] active:scale-[0.98]"
-          onClick={() => handleNav('catalog')}
+          onClick={() => handleNav("catalog")}
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-primary via-indigo-600 to-purple-500 text-white shadow-md shadow-primary/20">
             <Gamepad2 className="h-5 w-5" />
@@ -43,11 +42,11 @@ export function Navbar() {
         <nav className="hidden md:flex items-center gap-1.5 font-medium text-sm bg-muted/50 p-1 rounded-xl border border-border/50">
           <button
             type="button"
-            onClick={() => handleNav('catalog')}
+            onClick={() => handleNav("catalog")}
             className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-              currentView === 'catalog'
-                ? 'bg-background text-foreground shadow-xs border border-border/60'
-                : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
+              currentView === "catalog"
+                ? "bg-background text-foreground shadow-xs border border-border/60"
+                : "text-muted-foreground hover:text-foreground hover:bg-background/50"
             }`}
           >
             Catalog
@@ -57,11 +56,11 @@ export function Navbar() {
             <>
               <button
                 type="button"
-                onClick={() => handleNav('library')}
+                onClick={() => handleNav("library")}
                 className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  currentView === 'library'
-                    ? 'bg-background text-foreground shadow-xs border border-border/60'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
+                  currentView === "library"
+                    ? "bg-background text-foreground shadow-xs border border-border/60"
+                    : "text-muted-foreground hover:text-foreground hover:bg-background/50"
                 }`}
               >
                 <Library className="h-3.5 w-3.5" />
@@ -75,11 +74,11 @@ export function Navbar() {
 
               <button
                 type="button"
-                onClick={() => handleNav('profile')}
+                onClick={() => handleNav("profile")}
                 className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  currentView === 'profile'
-                    ? 'bg-background text-foreground shadow-xs border border-border/60'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
+                  currentView === "profile"
+                    ? "bg-background text-foreground shadow-xs border border-border/60"
+                    : "text-muted-foreground hover:text-foreground hover:bg-background/50"
                 }`}
               >
                 <UserIcon className="h-3.5 w-3.5" />
@@ -99,7 +98,7 @@ export function Navbar() {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => handleNav('profile')}
+                onClick={() => handleNav("profile")}
                 className="hidden sm:flex items-center gap-2 rounded-full border border-border/80 bg-card px-3 py-1.5 text-xs font-semibold hover:border-primary/50 transition-all cursor-pointer shadow-2xs"
               >
                 <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-[11px] font-bold text-primary">
@@ -146,11 +145,11 @@ export function Navbar() {
       <div className="flex md:hidden items-center justify-around border-t border-border/70 bg-card/60 px-2 py-2 text-xs font-medium">
         <button
           type="button"
-          onClick={() => handleNav('catalog')}
+          onClick={() => handleNav("catalog")}
           className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 transition-all ${
-            currentView === 'catalog'
-              ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
-              : 'text-muted-foreground hover:text-foreground'
+            currentView === "catalog"
+              ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
           <Gamepad2 className="h-4 w-4" />
@@ -161,11 +160,11 @@ export function Navbar() {
           <>
             <button
               type="button"
-              onClick={() => handleNav('library')}
+              onClick={() => handleNav("library")}
               className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 transition-all relative ${
-                currentView === 'library'
-                  ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
-                  : 'text-muted-foreground hover:text-foreground'
+                currentView === "library"
+                  ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               <Library className="h-4 w-4" />
@@ -179,11 +178,11 @@ export function Navbar() {
 
             <button
               type="button"
-              onClick={() => handleNav('profile')}
+              onClick={() => handleNav("profile")}
               className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 transition-all ${
-                currentView === 'profile'
-                  ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
-                  : 'text-muted-foreground hover:text-foreground'
+                currentView === "profile"
+                  ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               <UserIcon className="h-4 w-4" />
@@ -193,5 +192,5 @@ export function Navbar() {
         )}
       </div>
     </header>
-  )
+  );
 }

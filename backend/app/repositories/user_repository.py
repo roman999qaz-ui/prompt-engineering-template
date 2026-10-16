@@ -1,25 +1,24 @@
 from pathlib import Path
-from typing import Optional
 
 from app.models.user import UserInDb
 from app.utils.json_store import read_list_file, write_list_file
 
 
 class UserRepository:
-    def __init__(self, storage_path: Path):
+    def __init__(self, storage_path: Path) -> None:
         self._path = storage_path
 
     def list_all(self) -> list[UserInDb]:
         return read_list_file(self._path, UserInDb)
 
-    def get_by_id(self, user_id: str) -> Optional[UserInDb]:
+    def get_by_id(self, user_id: str) -> UserInDb | None:
         users = self.list_all()
         for u in users:
             if u.id == user_id:
                 return u
         return None
 
-    def get_by_email(self, email: str) -> Optional[UserInDb]:
+    def get_by_email(self, email: str) -> UserInDb | None:
         users = self.list_all()
         target = email.strip().lower()
         for u in users:
@@ -27,7 +26,7 @@ class UserRepository:
                 return u
         return None
 
-    def get_by_username(self, username: str) -> Optional[UserInDb]:
+    def get_by_username(self, username: str) -> UserInDb | None:
         users = self.list_all()
         target = username.strip().lower()
         for u in users:

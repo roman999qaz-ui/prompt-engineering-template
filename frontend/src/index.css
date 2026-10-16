@@ -45,8 +45,8 @@
   --accent: oklch(0.93 0.025 270);
   --accent-foreground: oklch(0.25 0.06 275);
   --destructive: oklch(0.58 0.22 25);
-  --border: oklch(0.90 0.012 260);
-  --input: oklch(0.90 0.012 260);
+  --border: oklch(0.9 0.012 260);
+  --input: oklch(0.9 0.012 260);
   --ring: oklch(0.55 0.22 275);
 }
 
@@ -64,7 +64,7 @@
   --secondary: oklch(0.24 0.04 265);
   --secondary-foreground: oklch(0.95 0.02 265);
   --muted: oklch(0.22 0.03 265);
-  --muted-foreground: oklch(0.70 0.03 260);
+  --muted-foreground: oklch(0.7 0.03 260);
   --accent: oklch(0.26 0.05 275);
   --accent-foreground: oklch(0.95 0.02 265);
   --destructive: oklch(0.65 0.22 25);
@@ -85,7 +85,9 @@
   }
   body {
     @apply bg-background text-foreground antialiased selection:bg-primary/25 selection:text-primary transition-colors duration-200;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
   }
 }
 

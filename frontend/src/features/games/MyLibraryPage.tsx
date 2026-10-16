@@ -1,41 +1,39 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { Edit3, Library, Sparkles, Star, Trash2 } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { useLibrary } from '@/hooks/useLibrary'
+import { useDispatch, useSelector } from "react-redux";
+import { Edit3, Library, Sparkles, Star, Trash2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useLibrary } from "@/hooks/useLibrary";
 import {
   openGameDetails,
   openStatusDialog,
   setCurrentView,
   setLibraryFilter,
-} from '@/store/slices/appSlice'
-import type { AppDispatch, RootState } from '@/store/store'
-import type { LibraryEntry, PlayStatus } from '@/types'
+} from "@/store/slices/appSlice";
+import type { AppDispatch, RootState } from "@/store/store";
+import type { LibraryEntry, PlayStatus } from "@/types";
 
 export function MyLibraryPage() {
-  const dispatch = useDispatch<AppDispatch>()
-  const libraryFilter = useSelector(
-    (state: RootState) => state.app.libraryFilter
-  )
+  const dispatch = useDispatch<AppDispatch>();
+  const libraryFilter = useSelector((state: RootState) => state.app.libraryFilter);
 
-  const activeStatus = libraryFilter === 'all' ? undefined : (libraryFilter as PlayStatus)
-  const { entries, stats, isLoading, removeEntry, isMutating } = useLibrary(activeStatus)
+  const activeStatus = libraryFilter === "all" ? undefined : (libraryFilter as PlayStatus);
+  const { entries, stats, isLoading, removeEntry, isMutating } = useLibrary(activeStatus);
 
   const handleCardClick = (gameId: string) => {
-    dispatch(openGameDetails(gameId))
-  }
+    dispatch(openGameDetails(gameId));
+  };
 
   const handleEdit = (e: React.MouseEvent, entry: LibraryEntry) => {
-    e.stopPropagation()
-    dispatch(openStatusDialog(entry))
-  }
+    e.stopPropagation();
+    dispatch(openStatusDialog(entry));
+  };
 
   const handleRemove = async (e: React.MouseEvent, entryId: string) => {
-    e.stopPropagation()
-    if (window.confirm('Remove this game from your personal library?')) {
-      await removeEntry(entryId)
+    e.stopPropagation();
+    if (window.confirm("Remove this game from your personal library?")) {
+      await removeEntry(entryId);
     }
-  }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 sm:px-8 space-y-8">
@@ -46,8 +44,8 @@ export function MyLibraryPage() {
           My Game Library
         </h1>
         <p className="text-muted-foreground text-base max-w-2xl">
-          Track your gaming backlog, currently active playthroughs, and personal
-          ratings for completed titles.
+          Track your gaming backlog, currently active playthroughs, and personal ratings for
+          completed titles.
         </p>
       </div>
 
@@ -55,20 +53,20 @@ export function MyLibraryPage() {
       <div className="flex flex-wrap items-center gap-2 border-b pb-4">
         {(
           [
-            { id: 'all', label: 'All Games', count: stats?.total_games ?? 0 },
+            { id: "all", label: "All Games", count: stats?.total_games ?? 0 },
             {
-              id: 'want_to_play',
-              label: 'Want to Play',
+              id: "want_to_play",
+              label: "Want to Play",
               count: stats?.want_to_play_count ?? 0,
             },
             {
-              id: 'playing',
-              label: 'Playing',
+              id: "playing",
+              label: "Playing",
               count: stats?.playing_count ?? 0,
             },
             {
-              id: 'completed',
-              label: 'Completed',
+              id: "completed",
+              label: "Completed",
               count: stats?.completed_count ?? 0,
             },
           ] as const
@@ -79,16 +77,16 @@ export function MyLibraryPage() {
             onClick={() => dispatch(setLibraryFilter(tab.id))}
             className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all ${
               libraryFilter === tab.id
-                ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
-                : 'bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground'
+                ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                : "bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground"
             }`}
           >
             <span>{tab.label}</span>
             <span
               className={`rounded-full px-1.5 py-0.2 text-xs font-semibold ${
                 libraryFilter === tab.id
-                  ? 'bg-primary-foreground/20 text-primary-foreground'
-                  : 'bg-background text-foreground'
+                  ? "bg-primary-foreground/20 text-primary-foreground"
+                  : "bg-background text-foreground"
               }`}
             >
               {tab.count}
@@ -115,13 +113,11 @@ export function MyLibraryPage() {
           <Sparkles className="mx-auto h-10 w-10 text-muted-foreground" />
           <h3 className="text-xl font-bold">No games in this section</h3>
           <p className="text-sm text-muted-foreground">
-            {libraryFilter === 'all'
+            {libraryFilter === "all"
               ? "Your library is empty. Browse the catalog and add games you'd like to play."
-              : `You don't have any games marked as "${libraryFilter.replace(/_/g, ' ')}".`}
+              : `You don't have any games marked as "${libraryFilter.replace(/_/g, " ")}".`}
           </p>
-          <Button onClick={() => dispatch(setCurrentView('catalog'))}>
-            Browse Catalog
-          </Button>
+          <Button onClick={() => dispatch(setCurrentView("catalog"))}>Browse Catalog</Button>
         </div>
       )}
 
@@ -129,8 +125,8 @@ export function MyLibraryPage() {
       {!isLoading && entries.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {entries.map((entry) => {
-            const game = entry.game
-            if (!game) return null
+            const game = entry.game;
+            if (!game) return null;
 
             return (
               <div
@@ -146,14 +142,14 @@ export function MyLibraryPage() {
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     loading="lazy"
                     onError={(e) => {
-                      e.currentTarget.onerror = null
+                      e.currentTarget.onerror = null;
                       e.currentTarget.src =
-                        'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80'
+                        "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80";
                     }}
                   />
                   <div className="absolute top-2.5 right-2.5">
                     <Badge variant={entry.status} className="shadow-xs backdrop-blur">
-                      {entry.status.replace(/_/g, ' ')}
+                      {entry.status.replace(/_/g, " ")}
                     </Badge>
                   </div>
                 </div>
@@ -178,9 +174,7 @@ export function MyLibraryPage() {
                         {entry.rating} / 10
                       </span>
                     ) : (
-                      <span className="text-muted-foreground italic">
-                        Not rated yet
-                      </span>
+                      <span className="text-muted-foreground italic">Not rated yet</span>
                     )}
 
                     {/* Quick Action Buttons */}
@@ -208,10 +202,10 @@ export function MyLibraryPage() {
                   </div>
                 </div>
               </div>
-            )
+            );
           })}
         </div>
       )}
     </div>
-  )
+  );
 }

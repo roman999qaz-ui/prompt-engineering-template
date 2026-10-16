@@ -78,3 +78,13 @@ All test cases are defined as end-to-end scenarios covering user actions, UI sta
 | **TC-INT-03** | Global Catalog Immutability | 1. User removes a game from their personal library. | Game entry in `games.json` remains completely unmodified. |
 | **TC-INT-04** | Graceful Backend Offline Handling | 1. Stop backend service.<br>2. Attempt actions in frontend. | Clear visual error banner displayed; no unhandled crashes; retry action available when backend resumes. |
 
+---
+
+## 7. Theme & Accessibility
+
+| ID | Title | Steps | Expected Result |
+|----|-------|-------|-----------------|
+| **TC-THEME-01** | Theme Toggle Switching | 1. Click theme toggle button in navigation bar.<br>2. Switch between Light and Dark mode. | Application colors, backgrounds, borders, and typography smoothly transition to the selected theme. |
+| **TC-THEME-02** | Theme Preference Persistence | 1. Select Dark theme.<br>2. Refresh browser page or close and reopen session. | Application loads directly in Dark mode; preference is preserved in `localStorage`. |
+
+

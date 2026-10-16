@@ -1,5 +1,3 @@
-from typing import Optional
-
 from fastapi import HTTPException, status
 
 from app.models.game import GameResponse
@@ -7,14 +5,14 @@ from app.repositories.game_repository import GameRepository
 
 
 class GameService:
-    def __init__(self, game_repo: GameRepository):
+    def __init__(self, game_repo: GameRepository) -> None:
         self._game_repo = game_repo
 
     def list_games(
         self,
-        search: Optional[str] = None,
-        genre: Optional[str] = None,
-        platform: Optional[str] = None,
+        search: str | None = None,
+        genre: str | None = None,
+        platform: str | None = None,
     ) -> list[GameResponse]:
         games = self._game_repo.list_all(search=search, genre=genre, platform=platform)
         return [GameResponse.model_validate(g) for g in games]

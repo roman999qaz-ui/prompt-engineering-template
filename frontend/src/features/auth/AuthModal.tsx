@@ -1,15 +1,15 @@
-import { useState } from 'react'
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { useAuth } from '@/hooks/useAuth'
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useAuth } from "@/hooks/useAuth";
 
 export function AuthModal() {
   const {
@@ -21,58 +21,56 @@ export function AuthModal() {
     register,
     isLoginLoading,
     isRegisterLoading,
-  } = useAuth()
+  } = useAuth();
 
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setErrorMessage(null)
+    e.preventDefault();
+    setErrorMessage(null);
 
     try {
-      if (authModalMode === 'login') {
-        await login({ email, password })
+      if (authModalMode === "login") {
+        await login({ email, password });
       } else {
-        await register({ username, email, password })
+        await register({ username, email, password });
       }
       // Reset form
-      setUsername('')
-      setEmail('')
-      setPassword('')
+      setUsername("");
+      setEmail("");
+      setPassword("");
     } catch (err: unknown) {
-      const errorObj = err as { data?: { detail?: string } }
-      setErrorMessage(
-        errorObj.data?.detail || 'An unexpected authentication error occurred.'
-      )
+      const errorObj = err as { data?: { detail?: string } };
+      setErrorMessage(errorObj.data?.detail || "An unexpected authentication error occurred.");
     }
-  }
+  };
 
-  const handleTabSwitch = (newMode: 'login' | 'register') => {
-    setAuthModalMode(newMode)
-    setErrorMessage(null)
-  }
+  const handleTabSwitch = (newMode: "login" | "register") => {
+    setAuthModalMode(newMode);
+    setErrorMessage(null);
+  };
 
   const handleClose = () => {
-    closeAuthModal()
-    setErrorMessage(null)
-  }
+    closeAuthModal();
+    setErrorMessage(null);
+  };
 
-  const isLoading = isLoginLoading || isRegisterLoading
+  const isLoading = isLoginLoading || isRegisterLoading;
 
   return (
     <Dialog open={isAuthModalOpen} onOpenChange={(open) => !open && handleClose()}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-xl">
-            {authModalMode === 'login' ? 'Welcome Back' : 'Create an Account'}
+            {authModalMode === "login" ? "Welcome Back" : "Create an Account"}
           </DialogTitle>
           <DialogDescription>
-            {authModalMode === 'login'
-              ? 'Sign in to access your personal game library and ratings.'
-              : 'Join GameLibrary to start tracking your video game collection.'}
+            {authModalMode === "login"
+              ? "Sign in to access your personal game library and ratings."
+              : "Join GameLibrary to start tracking your video game collection."}
           </DialogDescription>
         </DialogHeader>
 
@@ -81,22 +79,22 @@ export function AuthModal() {
           <button
             type="button"
             className={`flex-1 rounded-md py-1.5 transition-colors cursor-pointer ${
-              authModalMode === 'login'
-                ? 'bg-background shadow-xs font-semibold text-foreground'
-                : 'text-muted-foreground hover:text-foreground'
+              authModalMode === "login"
+                ? "bg-background shadow-xs font-semibold text-foreground"
+                : "text-muted-foreground hover:text-foreground"
             }`}
-            onClick={() => handleTabSwitch('login')}
+            onClick={() => handleTabSwitch("login")}
           >
             Log In
           </button>
           <button
             type="button"
             className={`flex-1 rounded-md py-1.5 transition-colors cursor-pointer ${
-              authModalMode === 'register'
-                ? 'bg-background shadow-xs font-semibold text-foreground'
-                : 'text-muted-foreground hover:text-foreground'
+              authModalMode === "register"
+                ? "bg-background shadow-xs font-semibold text-foreground"
+                : "text-muted-foreground hover:text-foreground"
             }`}
-            onClick={() => handleTabSwitch('register')}
+            onClick={() => handleTabSwitch("register")}
           >
             Sign Up
           </button>
@@ -109,7 +107,7 @@ export function AuthModal() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4 pt-2">
-          {authModalMode === 'register' && (
+          {authModalMode === "register" && (
             <div className="space-y-1.5">
               <Label htmlFor="username">Username</Label>
               <Input
@@ -153,24 +151,19 @@ export function AuthModal() {
           </div>
 
           <div className="pt-2 flex justify-end gap-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleClose}
-              disabled={isLoading}
-            >
+            <Button type="button" variant="outline" onClick={handleClose} disabled={isLoading}>
               Cancel
             </Button>
             <Button type="submit" disabled={isLoading}>
               {isLoading
-                ? 'Processing...'
-                : authModalMode === 'login'
-                ? 'Log In'
-                : 'Create Account'}
+                ? "Processing..."
+                : authModalMode === "login"
+                  ? "Log In"
+                  : "Create Account"}
             </Button>
           </div>
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
